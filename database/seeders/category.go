@@ -393,6 +393,26 @@ func CategorySeeder(db *gorm.DB) {
 				Valid:  true,
 			},
 		},
+		// ⭐️ کتگوری جدید اضافه شده - رگال (برای batch processing چندتا عکس)
+		{
+			//ID: 34 (این ID ممکنه متفاوت باشه)
+			ParentID: dtp.NullInt64{
+				Int64: 14, // زیر carpet_wallpaper_flooring
+				Valid: true,
+			},
+			Title:            "regal", // نام درست برای رگال/قفسه
+			UserID:           2,
+			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/carpet.svg", // فعلاً همین، بعداً آیکون رگال
+			AcceptedFileType: "multi-images",                                                // برای batch processing
+			ARPlacement: dtp.NullString{
+				String: "floor",
+				Valid:  true,
+			},
+			URL: dtp.NullString{
+				String: "https://webar.armogroup.tech/showroom", // URL صحیح برای showroom
+				Valid:  true,
+			},
+		},
 		{
 			//ID: 21
 			ParentID: dtp.NullInt64{
