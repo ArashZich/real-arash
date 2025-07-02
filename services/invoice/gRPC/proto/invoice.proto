@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package greeter;
+
+service Invoice {
+  rpc Issue (IssueInvoiceRequestBody) returns (IssueInvoiceResponseBody);
+}
+
+message IssueInvoiceRequestBody {
+  string price = 1;
+}
+
+message IssueInvoiceResponseBody {
+  string message = 1;
+  string price = 1;
+}

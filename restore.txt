@@ -1,0 +1,4 @@
+docker run -d --name temp_restore_container -v data:/backup_restore alpine
+docker cp /tmp/backup/data-backup temp_restore_container:/backup_restore
+docker stop temp_restore_container
+docker rm temp_restore_container

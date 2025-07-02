@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  armo_reality:
+    container_name: armo_reality
+    build: .
+    ports:
+      - "5554:5554"
+    env_file: .env
+    restart: unless-stopped
