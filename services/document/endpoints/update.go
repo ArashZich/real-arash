@@ -3,6 +3,7 @@ package endpoints
 import (
 	"context"
 	"net/http"
+	"net/url"
 
 	"gitag.ir/armogroup/armo/services/reality/models"
 	"gitag.ir/armogroup/armo/services/reality/policy"
@@ -13,14 +14,15 @@ import (
 )
 
 type UpdateDocumentRequest struct {
-	Title    *string `json:"title,omitempty"`     // pointer برای اختیاری بودن
-	ShopLink *string `json:"shop_link,omitempty"` // pointer برای اختیاری بودن
+	Title    *string `json:"title,omitempty"`
+	ShopLink *string `json:"shop_link,omitempty"`
 }
 
 func (c *UpdateDocumentRequest) Validate(r *http.Request) govalidity.ValidityResponseErrors {
 	schema := govalidity.Schema{
-		"title":     govalidity.New("title").Optional().MinMaxLength(2, 200),
-		"shop_link": govalidity.New("shop_link").Optional().Url(),
+		"title": govalidity.New("title").Optional().MinMaxLength(2, 200),
+		// shop_link رو فقط optional می‌کنیم، URL validation رو خودمون انجام می‌دیم
+		"shop_link": govalidity.New("shop_link").Optional(),
 	}
 
 	govalidity.SetFieldLabels(
@@ -35,6 +37,16 @@ func (c *UpdateDocumentRequest) Validate(r *http.Request) govalidity.ValidityRes
 	if len(errr) > 0 {
 		dumpedErrors := govalidity.DumpErrors(errr)
 		return dumpedErrors
+	}
+
+	// Custom validation برای shop_link
+	if c.ShopLink != nil && *c.ShopLink != "" {
+		_, err := url.ParseRequestURI(*c.ShopLink)
+		if err != nil {
+			return govalidity.ValidityResponseErrors{
+				"shop_link": []string{"لینک فروشگاه باید آدرس معتبر باشد"},
+			}
+		}
 	}
 
 	return nil
@@ -78,13 +90,11 @@ func (s *service) Update(ctx context.Context, id string, input UpdateDocumentReq
 	if input.Title != nil {
 		var product models.Product
 		err = s.db.WithContext(ctx).Where("product_uid = ?", document.ProductUID).First(&product).Error
-		if err == nil { // اگر محصول پیدا شد
+		if err == nil {
 			product.Name = *input.Title
 			err = s.db.WithContext(ctx).Save(&product).Error
 			if err != nil {
 				s.logger.With(ctx).Error("خطا در آپدیت نام محصول: ", err)
-				// در صورت خطا در آپدیت محصول، لاگ می‌کنیم ولی خطا برنمی‌گردانیم
-				// چون document با موفقیت آپدیت شده
 			}
 		} else {
 			s.logger.With(ctx).Error("خطا در یافتن محصول برای آپدیت نام: ", err)

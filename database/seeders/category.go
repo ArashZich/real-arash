@@ -402,8 +402,8 @@ func CategorySeeder(db *gorm.DB) {
 			},
 			Title:            "regal", // نام درست برای رگال/قفسه
 			UserID:           2,
-			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/carpet.svg", // فعلاً همین، بعداً آیکون رگال
-			AcceptedFileType: "multi-images",                                                // برای batch processing
+			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/regal.svg", // فعلاً همین، بعداً آیکون رگال
+			AcceptedFileType: "multi-images",                                               // برای batch processing
 			ARPlacement: dtp.NullString{
 				String: "floor",
 				Valid:  true,
