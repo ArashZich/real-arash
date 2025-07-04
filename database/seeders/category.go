@@ -393,26 +393,6 @@ func CategorySeeder(db *gorm.DB) {
 				Valid:  true,
 			},
 		},
-		// ⭐️ کتگوری جدید اضافه شده - رگال (برای batch processing چندتا عکس)
-		{
-			//ID: 34 (این ID ممکنه متفاوت باشه)
-			ParentID: dtp.NullInt64{
-				Int64: 14, // زیر carpet_wallpaper_flooring
-				Valid: true,
-			},
-			Title:            "regal", // نام درست برای رگال/قفسه
-			UserID:           2,
-			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/regal.svg", // فعلاً همین، بعداً آیکون رگال
-			AcceptedFileType: "multi-images",                                               // برای batch processing
-			ARPlacement: dtp.NullString{
-				String: "floor",
-				Valid:  true,
-			},
-			URL: dtp.NullString{
-				String: "https://webar.armogroup.tech/showroom", // URL صحیح برای showroom
-				Valid:  true,
-			},
-		},
 		{
 			//ID: 21
 			ParentID: dtp.NullInt64{
@@ -651,6 +631,45 @@ func CategorySeeder(db *gorm.DB) {
 			UserID:           2,
 			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/3D.svg",
 			AcceptedFileType: "glb",
+			ARPlacement: dtp.NullString{
+				String: "floor",
+				Valid:  true,
+			},
+			URL: dtp.NullString{
+				String: "https://webar.armogroup.tech/showroom",
+				Valid:  true,
+			},
+		},
+		// ⭐️ کتگوری جدید اضافه شده - رگال (برای batch processing چندتا عکس)
+		{
+			//ID: 34 (این ID ممکنه متفاوت باشه)
+			ParentID: dtp.NullInt64{
+				Int64: 14, // زیر carpet_wallpaper_flooring
+				Valid: true,
+			},
+			Title:            "regal", // نام درست برای رگال/قفسه
+			UserID:           2,
+			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/regal.svg", // فعلاً همین، بعداً آیکون رگال
+			AcceptedFileType: "multi-images",                                               // برای batch processing
+			ARPlacement: dtp.NullString{
+				String: "floor",
+				Valid:  true,
+			},
+			URL: dtp.NullString{
+				String: "https://webar.armogroup.tech/showroom", // URL صحیح برای showroom
+				Valid:  true,
+			},
+		},
+		{
+			//ID: 35
+			ParentID: dtp.NullInt64{
+				Int64: 1, // زیر home_kitchen
+				Valid: true,
+			},
+			Title:            "vitrine",
+			UserID:           2,
+			IconUrl:          "https://armogroup.storage.iran.liara.space/icons/vitrine.svg",
+			AcceptedFileType: "complex",
 			ARPlacement: dtp.NullString{
 				String: "floor",
 				Valid:  true,
