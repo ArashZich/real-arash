@@ -27,6 +27,7 @@ import (
 	"gitag.ir/armogroup/armo/services/reality/notification"
 	"gitag.ir/armogroup/armo/services/reality/services/account"
 	"gitag.ir/armogroup/armo/services/reality/services/category"
+	"gitag.ir/armogroup/armo/services/reality/services/cleanup"
 	"gitag.ir/armogroup/armo/services/reality/services/coupon"
 	"gitag.ir/armogroup/armo/services/reality/services/document"
 	"gitag.ir/armogroup/armo/services/reality/services/healthcheck"
@@ -44,6 +45,7 @@ import (
 	"gitag.ir/armogroup/armo/services/reality/services/verify"
 	"gitag.ir/armogroup/armo/services/reality/services/view"
 	"gitag.ir/armogroup/armo/services/reality/services/welcome"
+
 	echohandlers "github.com/ARmo-BigBang/kit/echo"
 	"github.com/ARmo-BigBang/kit/log"
 )
@@ -148,6 +150,9 @@ func main() {
 	_ = post.Register(e, db, logger, "v1")
 
 	_ = notify.Register(e, db, logger, "v1")
+
+	// ⭐️ اضافه کردن cleanup service
+	_ = cleanup.Register(e, db, logger, "v1")
 
 	msg := make(chan error)
 
